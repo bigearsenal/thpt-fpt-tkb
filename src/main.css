@@ -12,8 +12,24 @@ body {
 table {
     table-layout: fixed ;
     width: 100% ;
+    border-collapse: collapse;
+}
+th {
+    width: 25% ;
+    height: 24px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
 }
 td {
     width: 25% ;
     height: 24px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+}
+tr:not(.last) {
+    border-bottom: 1px solid black;
+}
+
+tr.last {
+    border-bottom: 2px solid black;
 }
