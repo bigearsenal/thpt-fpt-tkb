@@ -27,12 +27,20 @@ export function loadData(workbook) {
         let subjects = [];
 
         for (let j = 0; j < numberOfSubjects; j++) {
-            subjects.push(getCell(cells,0,j+3));
+            let subjectName = getCell(cells,0,j+3);
+            let numberOfLesson = getCell(cells,19,j+3);
+            let numberOfLessonPerWeek = getCell(cells,20,j+3);
+            let teacherName = getCell(cells,1,j+3);
+            let newSubject = new Subject(subjectName,numberOfLesson,numberOfLessonPerWeek,teacherName);
+            subjects.push(newSubject);
         }
 
         let newClass = new Class(className, classShift, subjects);
         classes.push(newClass);
     }
     console.log(classes);
+
+    // teachers
+
     return {classes}
 }

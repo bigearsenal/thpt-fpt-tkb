@@ -1,11 +1,11 @@
 // Subject
 export class Subject {
-    constructor(name, numberOfLessons, numberOfLessonsPerWeek, teacher) {
+    constructor(name, numberOfLessons, numberOfLessonsPerWeek, teacherName) {
         this.name = name;
         this.numberOfLessons = numberOfLessons;
         this.numberOfLessonsPerWeek = numberOfLessonsPerWeek;
         this.filledInThisWeek = 0;
-        this.teacher = teacher;
+        this.teacher = teacherName;
     }
 }
 
