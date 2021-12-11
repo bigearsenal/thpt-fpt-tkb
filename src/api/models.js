@@ -19,6 +19,15 @@ export class Class {
     }
 }
 
+// Teacher
+export class Teacher {
+    constructor(name, subjectName) {
+        this.name = name;
+        this.subjectName = subjectName
+        this.timetable = new Timetable();
+    }
+}
+
 // Time table
 export class Timetable {
     constructor() {

@@ -1,4 +1,4 @@
-import {Subject, Class} from "./models";
+import {Subject, Class, Teacher} from "./models";
 import XLSX from "xlsx";
 
 // Private functions
@@ -18,8 +18,9 @@ export function loadData(workbook) {
     const numberOfClasses = 18
     const numberOfSubjects = 7
 
-    // classes
+    // get classes and teachers
     let classes = [];
+    let teachers = [];
     for (let i = 0; i < numberOfClasses; i++) { // row
         const r = i + 1;
         const className = getCell(cells,r,1);
@@ -27,20 +28,28 @@ export function loadData(workbook) {
         let subjects = [];
 
         for (let j = 0; j < numberOfSubjects; j++) {
+            // get subject and append
             let subjectName = getCell(cells,0,j+3);
             let numberOfLesson = getCell(cells,19,j+3);
             let numberOfLessonPerWeek = getCell(cells,20,j+3);
-            let teacherName = getCell(cells,1,j+3);
+            let teacherName = getCell(cells,r,j+3);
             let newSubject = new Subject(subjectName,numberOfLesson,numberOfLessonPerWeek,teacherName);
             subjects.push(newSubject);
+
+            // get teacher if not exists
+            if (!teachers.some(teacher => teacher.name === teacherName)) {
+                teachers.push(new Teacher(teacherName, subjectName));
+            }
         }
 
         let newClass = new Class(className, classShift, subjects);
         classes.push(newClass);
     }
     console.log(classes);
+    console.log(teachers);
+    console.log(classes[0].subjects)
 
     // teachers
 
-    return {classes}
+    return {classes, teachers}
 }
