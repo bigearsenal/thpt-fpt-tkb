@@ -26,6 +26,6 @@ async function TKB() {
 
     // read excel file
     let {classes,teachers} = loadData(workbook);
-    createTimetableForClass(thead, tbody,classes);
+    await createTimetableForClass(thead, tbody,classes);
 }
 export default TKB;
