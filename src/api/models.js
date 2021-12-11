@@ -17,6 +17,14 @@ export class Class {
         this.subjects = subjects;
         this.timetable = new Timetable();
     }
+
+    get lessonIndexes() {
+        let indexes = [0,1,2,3];
+        if (this.shift === "CHIEU") {
+            indexes = indexes.map(index => index + 4);
+        }
+        return indexes
+    }
 }
 
 // Teacher
@@ -31,11 +39,11 @@ export class Teacher {
 // Time table
 export class Timetable {
     constructor() {
-        this.mon = undefined
-        this.tue = undefined
-        this.wed = undefined
-        this.thu = undefined
-        this.fri = undefined
-        this.sat = undefined
+        this.mon = ["", "", "", "", "", "", "", ""]
+        this.tue = ["", "", "", "", "", "", "", ""]
+        this.wed = ["", "", "", "", "", "", "", ""]
+        this.thu = ["", "", "", "", "", "", "", ""]
+        this.fri = ["", "", "", "", "", "", "", ""]
+        this.sat = ["", "", "", "", "", "", "", ""]
     }
 }
