@@ -1,5 +1,5 @@
-import {loadData} from "../api";
-import {createHeaderForWeek,createTimetableForClass} from "./table-generator";
+import {loadData} from "../api/exel-file-reader";
+import {createTimetableForClass} from "../api/table-generator";
 
 import workbook from "../../data/TKB.xlsx";
 
@@ -34,10 +34,5 @@ async function TKB() {
     // read excel file
     let {classes,teachers} = loadData(workbook);
     createTimetableForClass(thead, tbody,classes);
-
-    await sleep(1000);
-    classes[0].name = "test"
-    classes[0].timetable.mon[0] = "MAT"
-    createTimetableForClass(thead,tbody,classes);
 }
 export default TKB;

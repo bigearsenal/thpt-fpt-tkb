@@ -1,4 +1,4 @@
-export function createHeaderForWeek(tr) {
+function createHeaderForWeek(tr) {
     const headers = ["LOP","CA","TUAN","TIET","T2","T3","T4","T5","T6","T7"];
     for (let i = 0; i < headers.length; i++) {
         let th = document.createElement('th');
@@ -8,13 +8,13 @@ export function createHeaderForWeek(tr) {
     }
 }
 
-export function addTd(tr,text) {
+function addTd(tr,text) {
     let td = document.createElement('td');
     td.innerText = text;
     tr.appendChild(td);
 }
 
-export function addTr(tbody,texts,isLast) {
+function addTr(tbody,texts,isLast) {
     let tr = document.createElement('tr');
     if (isLast) {
         tr.className = "last";
@@ -25,7 +25,7 @@ export function addTr(tbody,texts,isLast) {
     tbody.appendChild(tr);
 }
 
-export function createTimetableForClass(thead, tbody, classes) {
+function printClassesTimetable(thead, tbody, classes) {
     // Clear body and header
     tbody.innerHTML = ""
     thead.innerHTML = ""
@@ -62,4 +62,8 @@ export function createTimetableForClass(thead, tbody, classes) {
             ]), j == 3);
         }
     }
+}
+
+export function createTimetableForClass(thead, tbody, classes) {
+    printClassesTimetable(thead, tbody,classes)
 }

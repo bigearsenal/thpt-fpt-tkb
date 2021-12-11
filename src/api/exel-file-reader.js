@@ -16,7 +16,7 @@ export function loadData(workbook) {
 
     // A1: K21
     const numberOfClasses = 18
-    const numberOfSubjects = 7
+    const numberOfSubjects = 6
 
     // get classes and teachers
     let classes = [];
@@ -37,7 +37,11 @@ export function loadData(workbook) {
             subjects.push(newSubject);
 
             // get teacher if not exists
-            if (!teachers.some(teacher => teacher.name === teacherName)) {
+            if (teacherName === "CHUA CO") {
+                if (!teachers.some(teacher => teacher.subjectName === subjectName)) {
+                    teachers.push(new Teacher(teacherName, subjectName));
+                }
+            } else if (!teachers.some(teacher => teacher.name === teacherName)) {
                 teachers.push(new Teacher(teacherName, subjectName));
             }
         }

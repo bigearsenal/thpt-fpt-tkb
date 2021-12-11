@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 require("@babel/register");
 
 const config = {
-  entry: ['@babel/polyfill','./src/index.js'],
+  entry: ['@babel/polyfill','./src/exel-file-reader.js'],
   output: {
     path: __dirname + '/public',
     filename: 'bundle.js'
