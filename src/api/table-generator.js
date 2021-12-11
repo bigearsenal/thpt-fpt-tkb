@@ -9,21 +9,18 @@ function sleep(ms) {
 
 function recursivelyFill(classes, lessonIndex, dayIndex, attempt) {
     if (fill(classes, lessonIndex, dayIndex) === true) {
-        const nli = nextLessonIndex(lessonIndex);
-        const ndi = nextDayIndex(dayIndex);
-
-        if (nli > classes.length * 4) {
+        const next = nextIndexes(lessonIndex, dayIndex);
+        if (next.lessonIndex > classes.length * 4) {
+            return true
+        }
+        return recursivelyFill(classes, next.lessonIndex, next.dayIndex, 0)
+    } else {
+        const previous = previousIndexes(lessonIndex, dayIndex);
+        if (previous.lessonIndex === -1) {
+            alert("Can not create scheduler");
             return false
         }
-        return recursivelyFill(classes, nli, ndi, 0)
-    } else {
-        const pli = previousLessonIndex(lessonIndex);
-        const pdi = previousDayIndex(dayIndex);
-        if (pli === -1) {
-            alert("Can not create scheduler");
-            return
-        }
-        return recursivelyFill(classes, pli, pdi, attempt + 1)
+        return recursivelyFill(classes, previous.lessonIndex, previous.dayIndex, attempt + 1)
     }
 }
 
@@ -31,31 +28,29 @@ function fill(classes, lessonIndex, dayIndex) {
     return true;
 }
 
-function previousLessonIndex(lessonIndex) {
-    return lessonIndex - 1
-}
-
-function previousDayIndex(dayIndex) {
+function previousIndexes(lessonIndex, dayIndex) {
     if (dayIndex === 0) {
-        return 5
+        return {
+            lessonIndex: lessonIndex - 1,
+            dayIndex: 5
+        }
     }
-    return dayIndex - 1
+    return {lessonIndex, dayIndex: dayIndex - 1}
 }
 
-function nextLessonIndex(lessonIndex) {
-    return lessonIndex + 1
-}
-
-function nextDayIndex(dayIndex) {
+function nextIndexes(lessonIndex, dayIndex) {
     if (dayIndex === 5) {
-        return 0
+        return {
+            lessonIndex: lessonIndex + 1,
+            dayIndex: 0
+        }
     }
-    return dayIndex + 1
+    return {lessonIndex, dayIndex: dayIndex + 1}
 }
 
 // MARK: - Public function
 export async function createTimetableForClass(thead, tbody, classes) {
-    recursivelyFill(classes, 0, 0, 0);
+    // recursivelyFill(classes, 0, 0, 0);
 
     printClassesTimetable(thead, tbody, classes);
     await sleep(300);
