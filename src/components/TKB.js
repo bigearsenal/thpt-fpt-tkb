@@ -1,13 +1,6 @@
 import {loadData} from "../api/exel-file-reader";
 import {createTimetableForClass} from "../api/table-generator";
-
 import workbook from "../../data/TKB.xlsx";
-
-function sleep(ms) {
-    return new Promise(
-        resolve => setTimeout(resolve, ms)
-    );
-}
 
 async function TKB() {
     // document div

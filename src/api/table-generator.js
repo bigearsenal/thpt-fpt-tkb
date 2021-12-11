@@ -1,3 +1,11 @@
+// MARK: - Helpers
+function sleep(ms) {
+    return new Promise(
+        resolve => setTimeout(resolve, ms)
+    );
+}
+
+// MARK: - HTML creators
 function createHeaderForWeek(tr) {
     const headers = ["LOP","CA","TUAN","TIET","T2","T3","T4","T5","T6","T7"];
     for (let i = 0; i < headers.length; i++) {
@@ -64,6 +72,7 @@ function printClassesTimetable(thead, tbody, classes) {
     }
 }
 
+// MARK: - Public function
 export function createTimetableForClass(thead, tbody, classes) {
     printClassesTimetable(thead, tbody,classes)
 }
