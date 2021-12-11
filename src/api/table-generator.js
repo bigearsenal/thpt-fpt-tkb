@@ -7,16 +7,20 @@ function sleep(ms) {
     );
 }
 
-function recursivelyFill(classes, lessonIndex, dayIndex, attempt) {
-    // find all possible variants
+function recursivelyFill(classes, lessonIndex, dayIndex) {
+    // condition to end loop (false/true)
 
-    // if variants.length == 0 || attempt == variants.length, move back previous
+    // if there are possible variant, attempt, return these value, else find all possible variants (and sort), save variants, attempt = 0
 
-    // else fill with variants[attempt]
+    // if variants.length == 0 || attempt == variants.length, remove variants, attempt, move back previous
 
-    // if fill next(attempt == 0) = true, return true
+    // else fill with variants[attempt], save attempt
 
-    // else fill current with attempt + 1
+    // show table, sleep 300
+
+    // if fill next = true, return true
+
+    // else save attempt + 1, fill current
 
     if (fill(classes, lessonIndex, dayIndex) === true) {
         const next = nextIndexes(lessonIndex, dayIndex);
@@ -60,7 +64,7 @@ function nextIndexes(lessonIndex, dayIndex) {
 
 // MARK: - Public function
 export async function createTimetableForClass(thead, tbody, classes) {
-    // recursivelyFill(classes, 0, 0, 0);
+    // recursivelyFill(classes, 0, 0);
 
     printClassesTimetable(thead, tbody, classes);
     await sleep(300);
