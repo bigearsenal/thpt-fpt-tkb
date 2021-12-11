@@ -8,6 +8,16 @@ function sleep(ms) {
 }
 
 function recursivelyFill(classes, lessonIndex, dayIndex, attempt) {
+    // find all possible variants
+
+    // if variants.length == 0 || attempt == variants.length, move back previous
+
+    // else fill with variants[attempt]
+
+    // if fill next(attempt == 0) = true, return true
+
+    // else fill current with attempt + 1
+
     if (fill(classes, lessonIndex, dayIndex) === true) {
         const next = nextIndexes(lessonIndex, dayIndex);
         if (next.lessonIndex > classes.length * 4) {
