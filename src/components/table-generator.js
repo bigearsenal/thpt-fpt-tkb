@@ -25,7 +25,17 @@ export function addTr(tbody,texts,isLast) {
     tbody.appendChild(tr);
 }
 
-export function createTimetableForClass(tbody, classes) {
+export function createTimetableForClass(thead, tbody, classes) {
+    // Clear body and header
+    tbody.innerHTML = ""
+    thead.innerHTML = ""
+
+    // Creating and adding header
+    let tr = document.createElement('tr');
+    createHeaderForWeek(tr)
+    thead.appendChild(tr);
+
+    // content
     for (let i = 0; i < classes.length; i++) {
         addTr(tbody, [
             classes[i].name,

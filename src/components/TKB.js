@@ -27,19 +27,17 @@ async function TKB() {
     table.style.border = border;
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
-
     table.appendChild(thead);
     table.appendChild(tbody);
-
     div.appendChild(table);
-
-    // Creating and adding header
-    let tr = document.createElement('tr');
-    createHeaderForWeek(tr)
-    thead.appendChild(tr);
 
     // read excel file
     let {classes,teachers} = loadData(workbook);
-    createTimetableForClass(tbody,classes)
+    createTimetableForClass(thead, tbody,classes);
+
+    await sleep(1000);
+    classes[0].name = "test"
+    classes[0].timetable.mon[0] = "MAT"
+    createTimetableForClass(thead,tbody,classes);
 }
 export default TKB;
