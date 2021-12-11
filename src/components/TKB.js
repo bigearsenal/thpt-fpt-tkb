@@ -31,6 +31,35 @@ function addTr(tbody,texts) {
     tbody.appendChild(tr);
 }
 
+function fillTable(tbody, classes) {
+    for (let i = 0; i < classes.length; i++) {
+        addTr(tbody, [
+            classes[i].name,
+            classes[i].shift,
+            1,
+            classes[i].lessonIndexes[0]
+        ].concat([
+            classes[i].timetable.mon[classes[i].lessonIndexes[0]],
+            classes[i].timetable.tue[classes[i].lessonIndexes[0]],
+            classes[i].timetable.wed[classes[i].lessonIndexes[0]],
+            classes[i].timetable.thu[classes[i].lessonIndexes[0]],
+            classes[i].timetable.fri[classes[i].lessonIndexes[0]],
+            classes[i].timetable.sat[classes[i].lessonIndexes[0]],
+        ]))
+
+        for (let j = 0; j < 4; j++) {
+            addTr(tbody, ["", "", "", ""].concat([
+                classes[i].timetable.mon[classes[i].lessonIndexes[j]],
+                classes[i].timetable.tue[classes[i].lessonIndexes[j]],
+                classes[i].timetable.wed[classes[i].lessonIndexes[j]],
+                classes[i].timetable.thu[classes[i].lessonIndexes[j]],
+                classes[i].timetable.fri[classes[i].lessonIndexes[j]],
+                classes[i].timetable.sat[classes[i].lessonIndexes[j]]
+            ]));
+        }
+    }
+}
+
 async function TKB() {
     // document div
     const div = document.createElement('div');
@@ -62,31 +91,6 @@ async function TKB() {
 
     // read excel file
     let {classes,teachers} = loadData(workbook);
-    for (let i = 0; i < classes.length; i++) {
-        addTr(tbody, [
-            classes[i].name,
-            classes[i].shift,
-            1,
-            classes[i].lessonIndexes[0]
-        ].concat([
-            classes[i].timetable.mon[classes[i].lessonIndexes[0]],
-            classes[i].timetable.tue[classes[i].lessonIndexes[0]],
-            classes[i].timetable.wed[classes[i].lessonIndexes[0]],
-            classes[i].timetable.thu[classes[i].lessonIndexes[0]],
-            classes[i].timetable.fri[classes[i].lessonIndexes[0]],
-            classes[i].timetable.sat[classes[i].lessonIndexes[0]],
-        ]))
-
-        for (let j = 0; j < 4; j++) {
-            addTr(tbody, ["", "", "", ""].concat([
-                classes[i].timetable.mon[classes[i].lessonIndexes[j]],
-                classes[i].timetable.tue[classes[i].lessonIndexes[j]],
-                classes[i].timetable.wed[classes[i].lessonIndexes[j]],
-                classes[i].timetable.thu[classes[i].lessonIndexes[j]],
-                classes[i].timetable.fri[classes[i].lessonIndexes[j]],
-                classes[i].timetable.sat[classes[i].lessonIndexes[j]]
-            ]));
-        }
-    }
+    fillTable(tbody,classes)
 }
 export default TKB;
