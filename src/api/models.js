@@ -15,6 +15,18 @@ export class Class {
         this.name = name;
         this.shift = shift;
         this.subjects = subjects;
-        this.timetable = [];
+        this.timetable = new Timetable();
+    }
+}
+
+// Time table
+export class Timetable {
+    constructor() {
+        this.mon = undefined
+        this.tue = undefined
+        this.wed = undefined
+        this.thu = undefined
+        this.fri = undefined
+        this.sat = undefined
     }
 }

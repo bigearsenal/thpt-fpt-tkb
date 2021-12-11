@@ -1,5 +1,7 @@
 import {loadData} from "../api";
 
+import workbook from "../../data/TKB.xlsx";
+
 function sleep(ms) {
     return new Promise(
         resolve => setTimeout(resolve, ms)
@@ -15,7 +17,7 @@ function createHeaderForWeek(tr) {
     }
 }
 
-async function TKB(workbook) {
+async function TKB() {
     // document div
     const div = document.createElement('div');
     div.className = 'main';
@@ -46,14 +48,14 @@ async function TKB(workbook) {
 
     // read excel file
     const data = loadData(workbook);
-    let classes = data.classes
-    for (let i = 0; i < classes.length; i++) {
-        let tr = document.createElement('tr');
-        let td = document.createElement('td');
-        td.innerText = classes[i].name;
-        tr.appendChild(td);
-        tbody.appendChild(tr)
-    }
+    // let classes = data.classes
+    // for (let i = 0; i < classes.length; i++) {
+    //     let tr = document.createElement('tr');
+    //     let td = document.createElement('td');
+    //     td.innerText = classes[i].name;
+    //     tr.appendChild(td);
+    //     tbody.appendChild(tr)
+    // }
 
 
 }

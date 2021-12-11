@@ -18,7 +18,8 @@ const config = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
-      }
+      },
+        { test: /\.xlsx$/, loader: "webpack-xlsx-loader" }
     ]
   },
   plugins: [
