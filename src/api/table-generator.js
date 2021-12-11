@@ -43,23 +43,23 @@ function printClassesTimetable(thead, tbody, classes) {
             1,
             classes[i].lessonIndexes[0] + 1
         ].concat([
-            classes[i].timetable.mon[classes[i].lessonIndexes[0]],
-            classes[i].timetable.tue[classes[i].lessonIndexes[0]],
-            classes[i].timetable.wed[classes[i].lessonIndexes[0]],
-            classes[i].timetable.thu[classes[i].lessonIndexes[0]],
-            classes[i].timetable.fri[classes[i].lessonIndexes[0]],
-            classes[i].timetable.sat[classes[i].lessonIndexes[0]],
+            classes[i].timetable[0][classes[i].lessonIndexes[0]],
+            classes[i].timetable[1][classes[i].lessonIndexes[0]],
+            classes[i].timetable[2][classes[i].lessonIndexes[0]],
+            classes[i].timetable[3][classes[i].lessonIndexes[0]],
+            classes[i].timetable[4][classes[i].lessonIndexes[0]],
+            classes[i].timetable[5][classes[i].lessonIndexes[0]],
         ]))
 
         for (let j = 1; j < 4; j++) {
             addTr(tbody, ["", "", "", classes[i].lessonIndexes[j] + 1].concat([
-                classes[i].timetable.mon[classes[i].lessonIndexes[j]],
-                classes[i].timetable.tue[classes[i].lessonIndexes[j]],
-                classes[i].timetable.wed[classes[i].lessonIndexes[j]],
-                classes[i].timetable.thu[classes[i].lessonIndexes[j]],
-                classes[i].timetable.fri[classes[i].lessonIndexes[j]],
-                classes[i].timetable.sat[classes[i].lessonIndexes[j]]
-            ]), j == 3);
+                classes[i].timetable[0][classes[i].lessonIndexes[j]],
+                classes[i].timetable[1][classes[i].lessonIndexes[j]],
+                classes[i].timetable[2][classes[i].lessonIndexes[j]],
+                classes[i].timetable[3][classes[i].lessonIndexes[j]],
+                classes[i].timetable[4][classes[i].lessonIndexes[j]],
+                classes[i].timetable[5][classes[i].lessonIndexes[j]]
+            ]), j === 3);
         }
     }
 }
