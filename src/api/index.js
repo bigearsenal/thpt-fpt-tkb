@@ -1,19 +1,29 @@
 import {Workbook} from "exceljs";
+import {Subject, Class} from "./models";
+
 // Private functions
-async function readExcelFile() {
-    const workbook = new Workbook();
-    await workbook.xlsx.readFile("../TKB.xlsx");
-    return workbook;
-}
 
 // Public functions
-export async function loadData() {
-    let workbook = await readExcelFile();
+export function loadData(workbook) {
+    const worksheet = workbook.getWorksheet("Sheet 1");
+    // A1: K21
+    const numberOfClasses = 18
+    const numberOfSubjects = 7
 
-}
-export async function getPost(id) {
-    const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`);
-    const json = await response.json();
+    // classes
+    let classes = [];
+    for (let i = 0; i < numberOfClasses; i++) { // row
+        const r = i + 2;
+        const className = worksheet.getCell(r,3);
+        const classShift = worksheet.getCell(r,4);
+        let subjects = [];
 
-    return json;
+        for (let j = 0; j < numberOfSubjects; j++) {
+            subjects.push(worksheet.getCell(1,j+5));
+        }
+
+        classes.push(Class(className, classShift, subjects));
+    }
+    console.log(classes.length);
+    return {classes}
 }

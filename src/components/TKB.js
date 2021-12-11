@@ -1,4 +1,4 @@
-import {readExcelFile} from "../api";
+import {loadData} from "../api";
 
 function sleep(ms) {
     return new Promise(
@@ -6,7 +6,16 @@ function sleep(ms) {
     );
 }
 
-async function TKB() {
+function createHeaderForWeek(tr) {
+    const headers = ["LOP","CA","TUAN","TIET","T2","T3","T4","T5","T6","T7"];
+    for (let i = 0; i < headers.length; i++) {
+        let th = document.createElement('th');
+        th.innerText = headers[i];
+        tr.appendChild(th);
+    }
+}
+
+async function TKB(workbook) {
     // document div
     const div = document.createElement('div');
     div.className = 'main';
@@ -19,31 +28,33 @@ async function TKB() {
     div.appendChild(h1);
 
     // table
-    let border = '1px solid black'
-    const tbl = document.createElement('table');
-    tbl.style.border = border;
-    div.appendChild(tbl);
-    for (let i = 0; i < 3; i++) {
-        const tr = tbl.insertRow();
-        for (let j = 0; j < 2; j++) {
-            if (i === 2 && j === 1) {
-                break;
-            } else {
-                const td = tr.insertCell();
-                td.appendChild(document.createTextNode(`asdfasdfasdCell I${i}/J${j}`));
-                td.style.border = border;
-                if (i === 1 && j === 1) {
-                    td.setAttribute('rowSpan', '2');
-                }
-            }
-            await sleep(1000)
-        }
+    const border = '1px solid'
+    let table = document.createElement('table');
+    table.style.border = border;
+    let thead = document.createElement('thead');
+    let tbody = document.createElement('tbody');
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    div.appendChild(table);
+
+    // Creating and adding header
+    let tr = document.createElement('tr');
+    createHeaderForWeek(tr)
+    thead.appendChild(tr);
+
+    // read excel file
+    const data = loadData(workbook);
+    let classes = data.classes
+    for (let i = 0; i < classes.length; i++) {
+        let tr = document.createElement('tr');
+        let td = document.createElement('td');
+        td.innerText = classes[i].name;
+        tr.appendChild(td);
+        tbody.appendChild(tr)
     }
 
 
-    for (let i = 0; i < 10; i++) {
-
-        await sleep(1000)
-    }
 }
 export default TKB;
