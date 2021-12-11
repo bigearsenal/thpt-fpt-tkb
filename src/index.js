@@ -1,8 +1,8 @@
-import HelloWorld from 'components/HelloWorld';
+import TKB from 'components/TKB';
 import 'main.css';
 
 const main = async () => {
-    HelloWorld();
+    TKB();
 }
 
 main().then(() => console.log('Started'));
