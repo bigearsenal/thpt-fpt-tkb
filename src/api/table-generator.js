@@ -29,14 +29,15 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     // get needed variables
     const dayIndex = column;
     const classIndex = getClassIndex(row);
-    let lessonIndex = getClassLessonIndex(row);
-    if (classes[classIndex].shift === "CHIEU") {
-        lessonIndex = lessonIndex + 4;
-    }
 
     // if classIndex === classes.count of class, we reached the end
     if (classIndex === classes.length) {
         return true
+    }
+
+    let lessonIndex = getClassLessonIndex(row);
+    if (classes[classIndex].shift === "CHIEU") {
+        lessonIndex = lessonIndex + 4;
     }
 
     // find possible variants
@@ -66,13 +67,12 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
 
         // fill teacher's timetable
         let teacherIndex = teachers.findIndex(teacher => teacher.name === variants[i].teacher);
-        teachers[teacherIndex].timetable[dayIndex][lessonIndex] = classes[classIndex].name
+        teachers[teacherIndex].timetable[dayIndex][lessonIndex] = classes[classIndex].name;
 
         // fill cell
         writeToCell(row, column, variants[i].name);
-        await sleep(300); // sleep to see result in real time
+        await sleep(20); // sleep to see result in real time
 
-        return true;
 
         // next
         let indexes = nextCellIndex(row, column);
@@ -80,6 +80,7 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
             thead,
             tbody,
             classes,
+            teachers,
             indexes.rowIndex,
             indexes.columnIndex
         );
