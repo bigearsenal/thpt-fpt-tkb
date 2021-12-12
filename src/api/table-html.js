@@ -66,3 +66,8 @@ export function printClassesTimetable(thead, tbody, classes) {
         }
     }
 }
+
+export function writeToCell(rowIndex, columnIndex, text) {
+    let element = document.getElementById(rowIndex + "-" + columnIndex);
+    element.innerHTML = text
+}

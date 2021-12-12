@@ -1,4 +1,4 @@
-import {printClassesTimetable} from './table-html';
+import {printClassesTimetable, writeToCell} from './table-html';
 
 // MARK: - Private functions
 function sleep(ms) {
@@ -31,8 +31,8 @@ async function recursivelyFill(thead, tbody, classes, row, column) {
 
         // TODO: - Fill teacher's timetable
 
-        // TODO: - Fill cell
-        // printClassesTimetable(thead, tbody, classes);
+        // fill cell
+        writeToCell(row, column, variants[i]);
         await sleep(300); // sleep to see result in real time
 
         // next
@@ -58,9 +58,8 @@ async function recursivelyFill(thead, tbody, classes, row, column) {
 
     // TODO: - Clear teacher timetable
 
-    // TODO: - Fill cell
-    // printClassesTimetable(thead, tbody, classes);
-    await sleep(300); // sleep to see result in real time
+    // fill cell
+    writeToCell(row, column, "");
 
     return false
 
@@ -101,6 +100,5 @@ function nextCellIndex(rowIndex, columnIndex) {
 // MARK: - Public function
 export async function createTimetableForClass(thead, tbody, classes) {
     printClassesTimetable(thead, tbody, classes);
-
     // await recursivelyFill(thead, tbody, classes, 0, 0);
 }
