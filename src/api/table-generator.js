@@ -102,26 +102,10 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
         return teacher.timetable[dayIndex][lessonIndex] === classes[classIndex].name
     });
 
-
     // fill cell
     writeToCell(row, column, "");
 
     return false
-
-    // MARK: - algorithm 2
-    // condition to end loop (false/true)
-
-    // if there are possible variant, attempt, return these value, else find all possible variants (and sort), save variants, attempt = 0
-
-    // if variants.length == 0 || attempt == variants.length, remove variants, attempt, move back previous
-
-    // else fill with variants[attempt], save attempt
-
-    // show table, sleep 300
-
-    // if fill next = true, return true
-
-    // else save attempt + 1, fill current
 }
 
 function getClassIndex(lessonIndex) {
