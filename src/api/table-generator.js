@@ -31,9 +31,11 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     const classIndex = getClassIndex(row);
 
     // if classIndex === classes.count of class, we reached the end
-    if (classIndex === classes.length) {
-        return true
+    if (classIndex === 0 && column === 6) {
+        return true;
     }
+
+    console.log("r" + column + classIndex + classes.length);
 
     let lessonIndex = getClassLessonIndex(row);
     if (classes[classIndex].shift === "CHIEU") {
@@ -61,7 +63,7 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
 
     // find variant that suitable
     for (let i = 0; i < variants.length; i++) {
-        console.log(variants[i]);
+        // console.log(variants[i]);
         // fill classes timetable
         classes[classIndex].timetable[dayIndex][lessonIndex] = variants[i].name;
 
@@ -73,9 +75,8 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
         writeToCell(row, column, variants[i].name);
         await sleep(10); // sleep to see result in real time
 
-
         // next
-        let indexes = nextCellIndex(row, column);
+        let indexes = nextCellIndex(row, column, classes.length);
         let fillNextResult = await recursivelyFill(
             thead,
             tbody,
@@ -116,14 +117,17 @@ function getClassLessonIndex(lessonIndex) {
     return lessonIndex % 4
 }
 
-function nextCellIndex(rowIndex, columnIndex) {
-    if (columnIndex === 5) {
+function nextCellIndex(rowIndex, columnIndex, classesLength) {
+    if (rowIndex + 1 === classesLength * 4) {
         return {
-            rowIndex: rowIndex + 1,
-            columnIndex: 0
+            rowIndex: 0,
+            columnIndex: columnIndex + 1
         }
     }
-    return {rowIndex: rowIndex, columnIndex: columnIndex + 1}
+    return {
+        rowIndex: rowIndex + 1,
+        columnIndex
+    }
 }
 
 // MARK: - Public function
