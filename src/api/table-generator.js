@@ -119,7 +119,7 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
 
     // fill cell
     writeToCell(row, column, "");
-    // await sleep(10); // sleep to see result in real time
+    await sleep(10); // sleep to see result in real tim
 
     // fill previous
     let indexes = prevCellIndex(row, column, classes.length);

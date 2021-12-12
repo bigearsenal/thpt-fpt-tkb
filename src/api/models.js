@@ -43,12 +43,13 @@ export class Teacher {
     }
 
     has2LessonsOf(className, dayIndex) {
+        if (this.name.startsWith(missingTeacherPrefix)) {return false;}
         let count = 0;
         for (let i = 0; i < 8; i++) {
             if (this.timetable[dayIndex][i] === className) {
                 count += 1;
             }
-            if (count == 2) {return true}
+            if (count >= 2) {return true}
         }
         return false;
     }
