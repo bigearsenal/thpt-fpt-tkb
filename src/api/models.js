@@ -34,6 +34,19 @@ export class Teacher {
         this.subjectName = subjectName
         this.timetable = new Timetable();
     }
+
+    isFreeAt(dayIndex, lessonIndex) {
+        return this.timetable[dayIndex][lessonIndex] === "";
+    }
+
+    hasLessonOf(className, dayIndex) {
+        for (let i = 0; i < 8; i++) {
+            if (this.timetable[dayIndex][i] !== "") {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 // Time table
