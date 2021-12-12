@@ -30,6 +30,10 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     const dayIndex = column;
     const classIndex = getClassIndex(row);
 
+    if (column === -1) {
+        return false;
+    }
+
     // if classIndex === classes.count of class, we reached the end
     if (classIndex === 0 && column === 6) {
         return true;
@@ -116,7 +120,15 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     }
 
     // fill previous
-    return false
+    let indexes = prevCellIndex(row, column, classes.length);
+    return await recursivelyFill(
+        thead,
+        tbody,
+        classes,
+        teachers,
+        indexes.rowIndex,
+        indexes.columnIndex
+    );
 }
 
 function getClassIndex(lessonIndex) {
@@ -125,6 +137,20 @@ function getClassIndex(lessonIndex) {
 
 function getClassLessonIndex(lessonIndex) {
     return lessonIndex % 4
+}
+
+function prevCellIndex(rowIndex, columnIndex, classesLength) {
+    if (rowIndex === 0) {
+        return {
+            rowIndex: classesLength * 4 - 1,
+            columnIndex: columnIndex - 1
+        }
+    }
+
+    return {
+        rowIndex: rowIndex - 1,
+        columnIndex:  - 1
+    }
 }
 
 function nextCellIndex(rowIndex, columnIndex, classesLength) {
