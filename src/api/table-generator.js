@@ -31,8 +31,8 @@ async function recursivelyFill(thead, tbody, classes, row, column) {
 
         // TODO: - Fill teacher's timetable
 
-        // print table
-        printClassesTimetable(thead, tbody, classes);
+        // TODO: - Fill cell
+        // printClassesTimetable(thead, tbody, classes);
         await sleep(300); // sleep to see result in real time
 
         // next
@@ -58,8 +58,8 @@ async function recursivelyFill(thead, tbody, classes, row, column) {
 
     // TODO: - Clear teacher timetable
 
-    // print
-    printClassesTimetable(thead, tbody, classes);
+    // TODO: - Fill cell
+    // printClassesTimetable(thead, tbody, classes);
     await sleep(300); // sleep to see result in real time
 
     return false
@@ -100,8 +100,7 @@ function nextCellIndex(rowIndex, columnIndex) {
 
 // MARK: - Public function
 export async function createTimetableForClass(thead, tbody, classes) {
-    // await recursivelyFill(thead, tbody, classes, 0, 0);
-
     printClassesTimetable(thead, tbody, classes);
-    await sleep(300);
+
+    // await recursivelyFill(thead, tbody, classes, 0, 0);
 }
