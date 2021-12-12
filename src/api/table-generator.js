@@ -7,7 +7,7 @@ function sleep(ms) {
     );
 }
 
-async function recursivelyFill(thead, tbody, classes, row, column) {
+async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     // get needed variables
     const dayIndex = column;
     const classIndex = getClassIndex(row);
@@ -98,7 +98,7 @@ function nextCellIndex(rowIndex, columnIndex) {
 }
 
 // MARK: - Public function
-export async function createTimetableForClass(thead, tbody, classes) {
+export async function createTimetableForClass(thead, tbody, classes, teachers) {
     printClassesTimetable(thead, tbody, classes);
-    // await recursivelyFill(thead, tbody, classes, 0, 0);
+    // await recursivelyFill(thead, tbody, classes, teachers, 0, 0);
 }
