@@ -7,6 +7,24 @@ function sleep(ms) {
     );
 }
 
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+}
+
 async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     // get needed variables
     const dayIndex = column;
@@ -21,19 +39,40 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
         return true
     }
 
-    // TODO: find possible variants, sort if needed
-    let variants = [];
+    // find possible variants
+    let variants = classes[classIndex].subjects.filter(subject => {
+        // find teacher
+        let teacher = teachers.find(teacher => teacher.name === subject.teacher);
+        // console.log(teacher);
+        // console.log(dayIndex, lessonIndex);
+        // console.log(teacher.isFreeAt(dayIndex, lessonIndex));
+        // console.log(teacher.hasLessonOf(classes[classIndex].name, dayIndex));
+        // check teacher
+        let isTeacherAvailable = !teacher.has2LessonsOf(classes[classIndex].name, dayIndex) &&
+            teacher.isFreeAt(dayIndex, lessonIndex)
+        // check if subject is filled
+        let isNotFilledInThisWeek = subject.filledInThisWeek < subject.numberOfLessonsPerWeek
+        return isTeacherAvailable && isNotFilledInThisWeek
+    })
 
-    // for variant in variants
-    for (let i = 0; i < variants.count; i++) {
+    // TODO: sort later, right now just shuffle
+    shuffle(variants);
+
+    // find variant that suitable
+    for (let i = 0; i < variants.length; i++) {
+        console.log(variants[i]);
         // fill classes timetable
-        classes[classIndex].timetable[dayIndex][lessonIndex] = variants[i];
+        classes[classIndex].timetable[dayIndex][lessonIndex] = variants[i].name;
 
-        // TODO: - Fill teacher's timetable
+        // fill teacher's timetable
+        let teacherIndex = teachers.findIndex(teacher => teacher.name === variants[i].teacher);
+        teachers[teacherIndex].timetable[dayIndex][lessonIndex] = classes[classIndex].name
 
         // fill cell
-        writeToCell(row, column, variants[i]);
+        writeToCell(row, column, variants[i].name);
         await sleep(300); // sleep to see result in real time
+
+        return true;
 
         // next
         let indexes = nextCellIndex(row, column);
@@ -100,5 +139,5 @@ function nextCellIndex(rowIndex, columnIndex) {
 // MARK: - Public function
 export async function createTimetableForClass(thead, tbody, classes, teachers) {
     printClassesTimetable(thead, tbody, classes);
-    // await recursivelyFill(thead, tbody, classes, teachers, 0, 0);
+    await recursivelyFill(thead, tbody, classes, teachers, 0, 0);
 }

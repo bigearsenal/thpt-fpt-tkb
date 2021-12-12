@@ -1,4 +1,6 @@
 // Subject
+import {missingTeacherPrefix} from "./constants";
+
 export class Subject {
     constructor(name, numberOfLessons, numberOfLessonsPerWeek, teacherName) {
         this.name = name;
@@ -36,14 +38,17 @@ export class Teacher {
     }
 
     isFreeAt(dayIndex, lessonIndex) {
+        if (this.name.startsWith(missingTeacherPrefix)) {return true;}
         return this.timetable[dayIndex][lessonIndex] === "";
     }
 
-    hasLessonOf(className, dayIndex) {
+    has2LessonsOf(className, dayIndex) {
+        let count = 0;
         for (let i = 0; i < 8; i++) {
-            if (this.timetable[dayIndex][i] !== "") {
-                return true;
+            if (this.timetable[dayIndex][i] === className) {
+                count += 1;
             }
+            if (count == 2) {return true}
         }
         return false;
     }

@@ -1,5 +1,6 @@
 import {Subject, Class, Teacher} from "./models";
 import XLSX from "xlsx";
+import {missingTeacherPrefix} from "./constants";
 
 // Private functions
 function getCell(cells,row, col) {
@@ -33,15 +34,14 @@ export function loadData(workbook) {
             let numberOfLesson = getCell(cells,19,j+3);
             let numberOfLessonPerWeek = getCell(cells,20,j+3);
             let teacherName = getCell(cells,r,j+3);
+            if (!teacherName) {
+                teacherName = missingTeacherPrefix + " " + subjectName;
+            }
             let newSubject = new Subject(subjectName,numberOfLesson,numberOfLessonPerWeek,teacherName);
             subjects.push(newSubject);
 
             // get teacher if not exists
-            if (teacherName === "CHUA CO") {
-                if (!teachers.some(teacher => teacher.subjectName === subjectName)) {
-                    teachers.push(new Teacher(teacherName, subjectName));
-                }
-            } else if (!teachers.some(teacher => teacher.name === teacherName)) {
+            if (!teachers.some(teacher => teacher.name === teacherName)) {
                 teachers.push(new Teacher(teacherName, subjectName));
             }
         }
