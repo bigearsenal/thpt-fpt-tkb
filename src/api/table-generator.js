@@ -71,7 +71,7 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
 
         // fill cell
         writeToCell(row, column, variants[i].name);
-        await sleep(20); // sleep to see result in real time
+        await sleep(10); // sleep to see result in real time
 
 
         // next
@@ -96,7 +96,12 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
     // clear classes timetable
     classes[classIndex].timetable[dayIndex][lessonIndex] = ""
 
-    // TODO: - Clear teacher timetable
+    // Clear teacher timetable on failed
+    // Find a teacher that has a lesson with this class at dayIndex and lessonIndex
+    teachers.findIndex(teacher => {
+        return teacher.timetable[dayIndex][lessonIndex] === classes[classIndex].name
+    });
+
 
     // fill cell
     writeToCell(row, column, "");
