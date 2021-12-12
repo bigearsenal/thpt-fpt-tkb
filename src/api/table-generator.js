@@ -66,6 +66,8 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
         // console.log(variants[i]);
         // fill classes timetable
         classes[classIndex].timetable[dayIndex][lessonIndex] = variants[i].name;
+        let subjectIndex = classes[classIndex].subjects.findIndex(subject => subject.name === variants[i].name);
+        classes[classIndex].subjects[subjectIndex].filledInThisWeek += 1;
 
         // fill teacher's timetable
         let teacherIndex = teachers.findIndex(teacher => teacher.name === variants[i].teacher);
@@ -93,19 +95,27 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
         }
     }
 
-    // IMPOSSIBLE CASE
-    // clear classes timetable
-    classes[classIndex].timetable[dayIndex][lessonIndex] = ""
+    if (variants.length !== 0) {
+        // IMPOSSIBLE CASE
+        // clear classes timetable
+        let currentSubject = classes[classIndex].timetable[dayIndex][lessonIndex];
+        let subjectIndex = classes[classIndex].subjects.findIndex(subject => subject.name === currentSubject);
+        console.log(currentSubject);
+        classes[classIndex].subjects[subjectIndex].filledInThisWeek -= 1;
 
-    // Clear teacher timetable on failed
-    // Find a teacher that has a lesson with this class at dayIndex and lessonIndex
-    teachers.findIndex(teacher => {
-        return teacher.timetable[dayIndex][lessonIndex] === classes[classIndex].name
-    });
+        classes[classIndex].timetable[dayIndex][lessonIndex] = ""
 
-    // fill cell
-    writeToCell(row, column, "");
+        // Clear teacher timetable on failed
+        // Find a teacher that has a lesson with this class at dayIndex and lessonIndex
+        teachers.findIndex(teacher => {
+            return teacher.timetable[dayIndex][lessonIndex] === classes[classIndex].name
+        });
 
+        // fill cell
+        writeToCell(row, column, "");
+    }
+
+    // fill previous
     return false
 }
 
