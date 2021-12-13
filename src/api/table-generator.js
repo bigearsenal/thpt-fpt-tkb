@@ -77,6 +77,7 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
 
         // fill cell
         writeToCell(row, column, variants[i].name);
+        await sleep(100);
 
         // next
         let indexes = nextCellIndex(row, column, classes.length);
@@ -93,33 +94,14 @@ async function recursivelyFill(thead, tbody, classes, teachers, row, column) {
         if (fillNextResult === true) {
             // POSSIBLE CASE
             return true
+        } else {
+            classes[classIndex].timetable[dayIndex][lessonIndex] = "";
+            classes[classIndex].subjects[subjectIndex].filledInThisWeek -= 1;
+            teachers[teacherIndex].timetable[dayIndex][lessonIndex] = "";
+            writeToCell(row, column, "");
+            await sleep(100);
         }
     }
-
-    // clearance
-    // Clear class' timetable when failed
-    let filledSubjectName = classes[classIndex].timetable[dayIndex][lessonIndex];
-    classes[classIndex].timetable[dayIndex][lessonIndex] = "";
-    if (filledSubjectName) {
-        let index = classes[classIndex].subjects.findIndex(subject => subject.name === filledSubjectName);
-        if (index > -1) {
-            classes[classIndex].subjects[index].filledInThisWeek -= 1;
-        }
-    }
-
-    // Clear teacher timetable on failed
-    // Find a teacher that has a lesson with this class at dayIndex and lessonIndex
-    let teacherIndex = teachers.findIndex(teacher => {
-        return teacher.timetable[dayIndex][lessonIndex] === classes[classIndex].name
-    });
-
-    if (teacherIndex > -1) {
-        teachers[teacherIndex].timetable[dayIndex][lessonIndex] = "";
-    }
-
-    // fill cell
-    writeToCell(row, column, "");
-    await sleep(10); // sleep to see result in real tim
 
     // fill previous
     let indexes = prevCellIndex(row, column, classes.length);
